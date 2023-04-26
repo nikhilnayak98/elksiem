@@ -7,8 +7,8 @@ echo "[*] removed logs and finished pcaps"
 
 if [ "$1" = "-v" ]
 then
-    docker-compose down -v
-    echo "[*] stopped containers and removed volumes"
+    docker-compose down --rmi all -v --remove-orphans
+    echo "[*] stopped containers and removed images, volumes"
 else
     docker-compose down
     echo "[*] stopped containers"
