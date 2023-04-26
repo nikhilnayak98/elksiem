@@ -1,11 +1,15 @@
 #!/bin/sh
-./clean.sh -v
 
-# filebeat requires only owner to have write perms on config file
-chmod go-w beats/filebeat/filebeat.yml
+rm -rf beats/filebeat/zeek_logs/*
+rm -rf finished_pcaps/*
 
-# build
-docker-compose build
+echo "[*] removed logs and finished pcaps"
 
-# run
-docker-compose up -d
+if [ "$1" = "-v" ]
+then
+    docker-compose down --rmi all -v --remove-orphans
+    echo "[*] stopped containers and removed images, volumes"
+else
+    docker-compose down
+    echo "[*] stopped containers"
+fi
